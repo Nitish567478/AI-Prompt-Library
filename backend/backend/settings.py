@@ -3,9 +3,13 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'secret-key'
-DEBUG = True
-ALLOWED_HOSTS = []
+SECRET_KEY = os.environ.get('SECRET_KEY', 'secret-key')
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+render_hostname = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if render_hostname:
+    ALLOWED_HOSTS.append(render_hostname)
 
 # ✅ APPS
 INSTALLED_APPS = [
@@ -22,12 +26,11 @@ INSTALLED_APPS = [
 # ✅ MIDDLEWARE (FIXED)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'corsheaders.middleware.CorsMiddleware',  # MUST be first
-    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -70,5 +73,6 @@ USE_TZ = True
 
 # ✅ STATIC
 STATIC_URL = 'static/'
+CORS_ALLOW_ALL_ORIGINS = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
