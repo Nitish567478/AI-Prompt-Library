@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+import { API_BASE_URL } from '../config/api.config';
+
 export interface Prompt {
   id?: number;
   title: string;
@@ -17,7 +19,7 @@ export interface Prompt {
 @Injectable({ providedIn: 'root' })
 export class PromptService {
 
-  private baseUrl = '/api/prompts/';
+  private baseUrl = `${API_BASE_URL}/prompts/`;
 
   constructor(private http: HttpClient) {}
 
@@ -31,10 +33,10 @@ export class PromptService {
   }
 
   createPrompt(data: Prompt) {
-    return this.http.post(`${this.baseUrl}create/`, data);
+    return this.http.post(`${this.baseUrl}create/`, data, { withCredentials: true });
   }
 
   deletePrompt(id: number) {
-    return this.http.delete(`${this.baseUrl}${id}/`);
+    return this.http.delete(`${this.baseUrl}${id}/`, { withCredentials: true });
   }
 }
