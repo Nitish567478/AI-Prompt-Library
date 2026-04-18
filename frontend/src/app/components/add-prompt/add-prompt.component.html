@@ -1,0 +1,38 @@
+<section class="page-shell">
+  <div class="page-hero">
+    <span class="eyebrow">Create Prompt</span>
+    <h2>Plant a new seed</h2>
+    <p>Save a reusable prompt with clear content and a simple complexity score.</p>
+  </div>
+
+  <ng-container *ngIf="currentUser$ | async as user; else loginGate">
+    <form (ngSubmit)="submit()" [formGroup]="form" class="form-card">
+      <p class="owner-note">You are creating this prompt as <strong>{{ user.username }}</strong>.</p>
+
+      <label for="title">Title</label>
+      <input id="title" formControlName="title" placeholder="Give your prompt a name" />
+
+      <label for="content">Content</label>
+      <textarea id="content" formControlName="content" placeholder="Write the prompt text here"></textarea>
+
+      <label for="complexity">Complexity</label>
+      <input id="complexity" type="number" min="1" max="10" formControlName="complexity" />
+
+      <p class="form-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+      <button type="submit">Save prompt</button>
+    </form>
+  </ng-container>
+
+  <ng-template #loginGate>
+    <div class="form-card auth-card auth-gate">
+      <p class="form-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      <h3>Login required</h3>
+      <p>Only logged-in users can create prompts in their own library.</p>
+      <div class="inline-actions">
+        <a routerLink="/login" class="primary-link">Login</a>
+        <a routerLink="/signup" class="secondary-link">Sign up</a>
+      </div>
+    </div>
+  </ng-template>
+</section>

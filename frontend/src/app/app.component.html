@@ -1,0 +1,37 @@
+<div class="layout">
+  <aside class="sidebar">
+    <div>
+      <h1 class="logo">Curio</h1>
+      <p class="tagline">AI PROMPT LIBRARY</p>
+    </div>
+
+    <nav class="nav">
+      <a routerLink="/" routerLinkActive="active">Browse prompts</a>
+      <a routerLink="/add">+ Add prompt</a>
+    </nav>
+
+    <div class="quote">
+      A curated collection of prompts for writing, coding, design, and idea generation.
+    </div>
+
+    <div class="auth-panel" *ngIf="currentUser$ | async as user; else guestLinks">
+      <p class="auth-label">Signed in as</p>
+      <p class="auth-user">{{ user.username }}</p>
+      <button type="button" class="ghost-btn" (click)="logout()">Logout</button>
+    </div>
+
+    <ng-template #guestLinks>
+      <div class="auth-panel">
+        <p class="auth-label">Account</p>
+        <div class="nav auth-nav">
+          <a routerLink="/login" routerLinkActive="active">Login</a>
+          <a routerLink="/signup" routerLinkActive="active">Sign up</a>
+        </div>
+      </div>
+    </ng-template>
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

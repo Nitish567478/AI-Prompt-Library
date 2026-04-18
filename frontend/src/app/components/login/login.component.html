@@ -1,0 +1,26 @@
+<section class="page-shell">
+  <div class="page-hero">
+    <span class="eyebrow">Welcome Back</span>
+    <h2>Login to manage your prompts</h2>
+    <p>Browse everything freely, then sign in to create, copy, and manage your own collection.</p>
+  </div>
+
+  <form (ngSubmit)="submit()" [formGroup]="form" class="form-card auth-card">
+    <label for="login-username">Username</label>
+    <input id="login-username" formControlName="username" placeholder="Enter your username" />
+
+    <label for="login-password">Password</label>
+    <input id="login-password" type="password" formControlName="password" placeholder="Enter your password" />
+
+    <p class="form-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <button type="submit" [disabled]="isSubmitting">
+      {{ isSubmitting ? 'Logging in...' : 'Login' }}
+    </button>
+
+    <p class="auth-switch">
+      New here?
+      <a routerLink="/signup">Create an account</a>
+    </p>
+  </form>
+</section>

@@ -1,0 +1,42 @@
+<!-- <div *ngFor="let p of prompts" class="card" [routerLink]="['/prompt', p.id]"> -->
+
+  <div class="header" >
+    <h2>Recent Discoveries</h2>
+    <span>{{ prompts.length }} prompts</span>
+  </div>
+
+  <div class="grid">
+
+    <div *ngFor="let p of prompts" class="card" [routerLink]="['/prompt', p.id]">
+
+      <div class="card-top">
+        <h3>{{ p.title }}</h3>
+        <div class="card-actions">
+          <span class="badge" [ngClass]="'badge-' + getComplexityLevel(p.complexity)">
+            {{ getComplexityLevel(p.complexity) }}
+          </span>
+
+          <button
+            *ngIf="p.is_owner"
+            type="button"
+            class="delete-btn"
+            (click)="deletePrompt($event, p.id)"
+            [disabled]="deletingId === p.id">
+            {{ deletingId === p.id ? 'Deleting...' : 'Delete' }}
+          </button>
+        </div>
+      </div>
+
+      <p class="desc">{{ p.content }}</p>
+
+      <div class="meta">
+        <span>By {{ p.owner_name || 'Anonymous' }}</span>
+        <span>Complexity {{ p.complexity }}/10</span>
+        <span>{{ p.views }} glances</span>
+      </div>
+
+    </div>
+
+  </div>
+
+<!-- </div> -->

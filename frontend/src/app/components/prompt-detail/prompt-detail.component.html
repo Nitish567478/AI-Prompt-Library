@@ -1,0 +1,57 @@
+<div class="detail-wrapper" *ngIf="prompt as p">
+  <a class="back" (click)="goBack()">&larr; Back to collection</a>
+
+  <div class="detail-card">
+    <div class="detail-header">
+      <div>
+        <h1>{{ p.title }}</h1>
+        <p class="detail-owner">Created by {{ p.owner_name || 'Anonymous' }}</p>
+      </div>
+
+      <div class="card-actions">
+        <span class="badge" [ngClass]="'badge-' + getComplexityLevel(p.complexity)">
+          {{ getComplexityLevel(p.complexity) }} ({{ p.complexity }}/10)
+        </span>
+
+        <button
+          type="button"
+          class="copy-btn"
+          (click)="copyPrompt(p.content)">
+          {{ copied ? 'Copied' : 'Copy prompt' }}
+        </button>
+
+        <button
+          *ngIf="p.is_owner"
+          type="button"
+          class="delete-btn"
+          (click)="deletePrompt(p.id)"
+          [disabled]="isDeleting">
+          {{ isDeleting ? 'Deleting...' : 'Delete prompt' }}
+        </button>
+      </div>
+    </div>
+
+    <div class="detail-content">
+      <p>{{ p.content }}</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="detail-footer">
+      <div>
+        <small>CREATED</small>
+        <p>{{ p.created_at }}</p>
+      </div>
+
+      <div>
+        <small>AUTHOR</small>
+        <p>{{ p.owner_name || 'Anonymous' }}</p>
+      </div>
+
+      <div class="right">
+        <small>RESONANCE</small>
+        <p>{{ p.views }} glances</p>
+      </div>
+    </div>
+  </div>
+</div>
